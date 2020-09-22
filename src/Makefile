@@ -1,5 +1,6 @@
 export PROJECT = github.com/gufranmirza/redact-api-golang
 export BINARY_NAME = "redact-api"
+export CONFIG_FILE = "app-config.json"
 
 # global command
 .PHONY: all
@@ -13,6 +14,7 @@ dependencies:
 build:
 	env GOOS=linux GOARCH=amd64 go build -o ../bin/${BINARY_NAME} $(PROJECT)/src
 	chmod +x ../bin/${BINARY_NAME}
+	cp -r ${CONFIG_FILE} ../bin
 
 .PHONY: run
 run:
@@ -22,19 +24,21 @@ run:
 start:
 	../bin/${BINARY_NAME}
 
-.PHONY: start
+.PHONY: mock
 mock:	
-	mockgen -package healthmock github.com/gufranmirza/redact-api-golang/src/web/services/health Health > web/services/health/healthmock/mock.go
 	mockgen -package servermock github.com/gufranmirza/redact-api-golang/src/web/server Server > web/server/servermock/mock.go
 	mockgen -package routermock github.com/gufranmirza/redact-api-golang/src/web/router Router > web/router/routermock/mock.go
+	mockgen -package redactmock github.com/gufranmirza/redact-api-golang/src/web/services/redact Redact > web/services/redact/redactmock/mock.go
+	mockgen -package healthmock github.com/gufranmirza/redact-api-golang/src/web/services/health Health > web/services/health/healthmock/mock.go
 
 packages = \
 	./config\
 	./web/server\
 	./web/router\
 	./web/services/health\
+	./web/services/redact\
 
-.PHONY: start
+.PHONY: test
 test:
 	@$(foreach package,$(packages), \
     		set -e; \

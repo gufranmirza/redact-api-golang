@@ -12,6 +12,5 @@ type AppConfig struct {
 	ServiceName     string `json:"ServiceName"`
 	ServiceProvider string `json:"ServiceProvider"`
 	ServiceVersion  string `json:"ServiceVersion"`
-	APIVersionV1    string `json:"APIVersionV1"`
 	URLPrefix       string `json:"URLPrefix"`
 }

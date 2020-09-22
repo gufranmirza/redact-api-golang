@@ -11,7 +11,7 @@ import (
 
 	"github.com/gufranmirza/redact-api-golang/src/config"
 	"github.com/gufranmirza/redact-api-golang/src/models"
-	"github.com/gufranmirza/redact-api-golang/src/web/interfaces/v1/healthinterface"
+	"github.com/gufranmirza/redact-api-golang/src/web/interfaces/healthinterface"
 )
 
 type health struct {

@@ -2,8 +2,7 @@
     "ServiceName": "Redact API",
     "ServiceProvider": "Ednsquare Tech",
     "ServiceVersion": "v1.0.0",
-    "APIVersionV1": "/v1",
-    "URLPrefix": "/redact-api",
+    "URLPrefix": "",
 
     "Hostname": "0.0.0.0",
     "Port": 8001

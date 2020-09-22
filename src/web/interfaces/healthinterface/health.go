@@ -15,7 +15,6 @@ var (
 	ServiceDegraded ServiceStatus = "Degraded"
 	// ServiceStopped represents service is Stopped
 	ServiceStopped ServiceStatus = "Stopped"
-
 	// ConnectionActive represents connection is active
 	ConnectionActive ConnectionStatus = "Active"
 	// ConnectionDisconnected represents connection is disconnected

@@ -8,11 +8,14 @@ import (
 	"github.com/gufranmirza/redact-api-golang/src/config"
 	"github.com/gufranmirza/redact-api-golang/src/models"
 	"github.com/gufranmirza/redact-api-golang/src/web/services/health"
+	"github.com/gufranmirza/redact-api-golang/src/web/services/redact"
+
 )
 
 type router struct {
 	config *models.AppConfig
 	health health.Health
+	redact redact.Redact
 }
 
 // NewRouter returns the router implementation
@@ -20,6 +23,7 @@ func NewRouter() Router {
 	return &router{
 		config: config.Config,
 		health: health.NewHealth(),
+		redact: redact.NewRedact(),
 	}
 }
 
@@ -27,15 +31,14 @@ func NewRouter() Router {
 func (router *router) Router() *http.ServeMux {
 	r := http.NewServeMux()
 
-	// v1 URL router prefix
-	// v1Prefix := router.config.URLPrefix + router.config.APIVersionV1
+	// URL router prefix
+	urlPrefix := router.config.URLPrefix
 
-	// // =================  health routes ======================
-	r.Handle(router.config.URLPrefix+"/health", router.health.GetHealth())
+	// =================  health routes ======================
+	r.Handle(urlPrefix+"/health", router.health.GetHealth())
 
-	// // =================  recruiters routes ======================
-	// recruiterPrefix := v1Prefix + "/recruiters"
-	// r.Post(recruiterPrefix+"/signup", router.recruiter.CreateRecruiter)
+	// =================  redact routes ======================
+	r.Handle(urlPrefix + "/redact", router.redact.RedactJSON())
 
 	return r
 }
