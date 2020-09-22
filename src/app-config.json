@@ -5,6 +5,6 @@
     "APIVersionV1": "/v1",
     "URLPrefix": "/redact-api",
 
-    "Hostname": "127.0.0.1",
+    "Hostname": "0.0.0.0",
     "Port": 8001
 }
