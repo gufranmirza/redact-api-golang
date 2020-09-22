@@ -1,0 +1,90 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Redact API"
+host: "localhost:8001"
+basePath: "/redact-api/"
+tags:
+- name: "redact-api"
+  description: "Everything about redact-api"
+
+schemes:
+- "http"
+paths:
+  /health:
+    get:
+      tags:
+      - "redact-api"
+      summary: "Returns the health of the service"
+      description: ""
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Status Ok"
+          schema:
+            $ref: "#/definitions/Health"
+        "404":
+          description: "Not found"
+        "500":
+          description: "Internal server exception"
+        "503":
+          description: "Service un-available"
+
+
+definitions:
+  Health:
+    type: "object"
+    properties:
+      TimeStampUTC:
+        type: "string"
+      ServiceName:
+        type: "string"
+      ServiceProvider:
+        type: "string"
+      ServiceVersion:
+        type: "string"
+      ServiceStatus:
+        type: "string"
+      ServiceStartTimeUTC:
+        type: "string"
+      Uptime:
+        type: "integer"
+      InboundInterfaces:
+        type: "array"
+        items:
+          $ref: "#/definitions/InboundInterface"
+      OutboundInterfaces:
+        type: "array"
+        items:
+          $ref: "#/definitions/OutboundInterface"
+          
+  OutboundInterface:
+    type: "object"
+    properties:
+      ApplicationName:
+        type: "string"
+      TimeStampUTC:
+        type: "string"
+      URLs:
+        type: "array"
+        items:
+          type: "string"
+      ConnectionStatus:
+        type: "string"
+  
+  InboundInterface:
+    type: "object"
+    properties:
+      ApplicationName:
+        type: "string"
+      TimeStampUTC:
+        type: "string"
+      Hostname:
+        type: "string"
+      ConnectionStatus:
+        type: "string"
+      Address:
+        type: "string"
+      OS:
+        type: "string"
