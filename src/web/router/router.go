@@ -34,7 +34,7 @@ func (router *router) Router() *http.ServeMux {
 	urlPrefix := router.config.URLPrefix
 
 	// =================  health routes ======================
-	r.Handle(urlPrefix+"/health", router.health.GetHealth())
+	r.Handle(urlPrefix+"/health/", router.health.GetHealth())
 
 	// =================  redact routes ======================
 	r.Handle(urlPrefix+"/redact/", router.redact.RedactJSON())
