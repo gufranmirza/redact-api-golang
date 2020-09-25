@@ -11,15 +11,18 @@ Clone repository
 ``` 
 git clone https://github.com/gufranmirza/redact-api-golang
 ```
-go to `src`  folder
+
+Go to the `src`  folder
 ```
 cd redact-api-golang/src
 ```
-Run the service
+
+Execute the following command to run the serverice locally
 ```
 make run
 ```
-Building the service
+
+Execute the following command for building the service
 ```
 make build
 ```
@@ -27,21 +30,22 @@ It will create executable binary into the `/bin` folder
 
 
 # Testing
-go to `src`  folder
+Go to the `src` folder 
 
-Run tests
+Each packages has their own unit tests written inside them.
+Please run the following command to run all unit tests
 ```
 make test
 ```
 
 # Generating Mocks 
-go to `src`  folder
+Go to the `src`  folder
 
 Generate mocks for packages using the command
-
 ```
 make mock
 ```
+
 # API Documentation
 API documentation is maintained with swagger.[ Here is the link to swagger file](https://github.com/gufranmirza/redact-api-golang/blob/master/api/swagger.yaml)
 
