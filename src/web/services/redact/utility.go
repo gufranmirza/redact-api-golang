@@ -1,7 +1,7 @@
 package redact
 
 import (
-	"encoding/json"
+	"errors"
 	"fmt"
 	"reflect"
 	"regexp"
@@ -45,6 +45,11 @@ func (r *redact) redactJSON(m map[string]interface{}, keys []string, regex []str
 		if k == leafIdx && len(keys) > 1 {
 			r.redactJSON(v.(map[string]interface{}), keys[1:], regex, replaceall)
 		} else if len(keys) == 1 && leafIdx == k {
+			// only reduce leaf nodes
+			if reflect.TypeOf(m[leafIdx]).Kind() != reflect.String {
+				return errors.New("only reduction of leaf node is allowed")
+			}
+
 			// handle replace all condition
 			if replaceall {
 				m[leafIdx] = strings.Repeat("*", len(fmt.Sprint(m[leafIdx])))
@@ -53,10 +58,6 @@ func (r *redact) redactJSON(m map[string]interface{}, keys []string, regex []str
 
 			// handle regular expression
 			for _, reg := range regex {
-				if reflect.TypeOf(m[leafIdx]).Kind() != reflect.String {
-					buf, _ := json.Marshal(m[leafIdx])
-					m[leafIdx] = string(buf)
-				}
 				re := regexp.MustCompile(reg)
 				s := re.ReplaceAllStringFunc(m[leafIdx].(string), func(s string) string { return strings.Repeat("*", len(s)) })
 				m[leafIdx] = s
