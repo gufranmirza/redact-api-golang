@@ -69,7 +69,7 @@ func (h *health) GetHealth() http.Handler {
 			return
 		}
 
-		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.Header().Set("X-Content-Type-Options", "nosniff")
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintln(w, string(buff))
