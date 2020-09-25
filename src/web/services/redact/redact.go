@@ -44,14 +44,20 @@ func (rs *redact) RedactJSON() http.Handler {
 		for _, item := range data.RedactCompletely {
 			rs.logger.Printf("%s applying full path replace at path: %s", txID, item)
 			keys := strings.Split(item, ".")
-			rs.redactJSON(data.JSONToRedact, keys, []string{}, true)
+			err := rs.redactJSON(data.JSONToRedact, keys, []string{}, true)
+			if err != nil {
+				rs.logger.Printf("%s failed to apply full path replace at path: %s with error %s", txID, item, err)
+			}
 		}
 
 		// Apply regex
 		for _, item := range data.RedactRegexes {
 			rs.logger.Printf("%s applying regex replace at path: %s", txID, item.Path)
 			keys := strings.Split(item.Path, ".")
-			rs.redactJSON(data.JSONToRedact, keys, item.Regexes, false)
+			err := rs.redactJSON(data.JSONToRedact, keys, item.Regexes, false)
+			if err != nil {
+				rs.logger.Printf("%s failed to apply regex at path: %s with error %s", txID, item, err)
+			}
 		}
 
 		buff, err := json.Marshal(data.JSONToRedact)
