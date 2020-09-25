@@ -9,7 +9,6 @@ import (
 	"github.com/gufranmirza/redact-api-golang/src/models"
 	"github.com/gufranmirza/redact-api-golang/src/web/services/health"
 	"github.com/gufranmirza/redact-api-golang/src/web/services/redact"
-
 )
 
 type router struct {
@@ -38,7 +37,7 @@ func (router *router) Router() *http.ServeMux {
 	r.Handle(urlPrefix+"/health", router.health.GetHealth())
 
 	// =================  redact routes ======================
-	r.Handle(urlPrefix + "/redact", router.redact.RedactJSON())
+	r.Handle(urlPrefix+"/redact/", router.redact.RedactJSON())
 
 	return r
 }

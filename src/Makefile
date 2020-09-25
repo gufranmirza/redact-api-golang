@@ -13,7 +13,6 @@ dependencies:
 .PHONY: build
 build:
 	env GOOS=linux GOARCH=amd64 go build -o ../bin/${BINARY_NAME} $(PROJECT)/src
-	chmod +x ../bin/${BINARY_NAME}
 	cp -r ${CONFIG_FILE} ../bin
 
 .PHONY: run

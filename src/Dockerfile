@@ -16,9 +16,6 @@ RUN go mod download
 
 # Build the application
 RUN go build -o ../bin/${BINARY_NAME} .
-# RUN	chmod +x ./bin/${BINARY_NAME}
-
-RUN ls $GOPATH/src/github.com/gufranmirza/redact-api-golang/bin
 
 # Move to /dist directory as the place for resulting binary folder
 WORKDIR /dist
