@@ -10,7 +10,7 @@ tags:
 schemes:
 - "http"
 paths:
-  /health:
+  /health/:
     get:
       tags:
       - "redact-api"
@@ -25,11 +25,62 @@ paths:
             $ref: "#/definitions/Health"
         "404":
           description: "Not found"
+          schema:
+            $ref: "#/definitions/ErrorInterface"
         "500":
           description: "Internal server exception"
+          schema:
+            $ref: "#/definitions/ErrorInterface"
         "503":
           description: "Service un-available"
-
+  
+  /redact/:
+    post:
+      tags:
+      - "redact-api"
+      summary: "Redacts the given JSON"
+      description: ""
+      produces:
+      - "application/json"
+      consumes:
+      - "application/json"
+      parameters:
+        - in: body
+          name: body
+          description: "Redacts the given JSON"
+          schema:
+            type: "object"
+            properties:
+              json_to_redact:
+                type: "object"
+              redact_regexes:
+                type: "array"
+                items: 
+                  $ref: "#/definitions/RedactRegexes"
+              redact_completely:
+                type: "array"
+                items: 
+                  type: "string"
+  
+      responses:
+        "200":
+          description: "Status Ok"
+          schema:
+            type: "object"
+        "400":
+          description: "Bad request"
+          schema:
+            $ref: "#/definitions/ErrorInterface"
+        "404":
+          description: "Not found"
+          schema:
+            $ref: "#/definitions/ErrorInterface"
+        "500":
+          description: "Internal server exception"
+          schema:
+            $ref: "#/definitions/ErrorInterface"
+        "503":
+          description: "Service un-available"
 
 definitions:
   Health:
@@ -87,3 +138,41 @@ definitions:
         type: "string"
       OS:
         type: "string"
+        
+  ErrorInterface:
+    type: "object"
+    properties:
+      Status:
+        type: "string"
+      Code:
+        type: "string"
+      Error:
+        type: "string"
+  
+  ReductResponse:
+    type: "object"
+    
+  RedactInterface:
+    type: "object"
+    properties:
+      json_to_redact:
+        type: "object"
+      redact_completely:
+        type: "array"
+        items:
+          type: "string"
+      redact_regexes:
+        type: array
+        items: 
+          $ref: "#/definitions/RedactRegexes"
+  
+  RedactRegexes:
+    type: object
+    properties:
+      path:
+        type: "string"
+      regexes:
+        type: "array"
+        items:
+          type: "string"
+        
